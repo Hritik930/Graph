@@ -1,53 +1,54 @@
 import java.util.*;
 
-public class Graph{
-    class Pair{
+public class Graph {
+    class Pair {
         int node;
         int weight;
-        Pair(int n, int w){
+        Pair(int n, int w) {
             node = n;
             weight = w;
         }
         @Override
-        public String toString(){
+        public String toString() {
             return "(" + node + "," + weight + ")";
         }
     }
-    List<List<Pair>>adjListWeighted; //Declare Graph
-    Graph(int nodes){
+    
+    List<List<Pair>> adjListWeighted; // Declare Graph
+    
+    Graph(int nodes) {
         adjListWeighted = new ArrayList<>();
-        for(int i = 0; i<nodes; i++){
+        for (int i = 0; i < nodes; i++) {
             adjListWeighted.add(new ArrayList<>());
-        }//initialize graph List
+        } // initialize graph List
     }
     
-    public void addEdgesWeightInList(int edges[][], boolean isDirected){
-        for(int edge[] : edges){
-            int U = edge[0]; //starting node of the edge
-            int V = edge[1]; //ending node of the edge
-            int W  = edge[2];
+    public void addEdgesWeightInList(int edges[][], boolean isDirected) {
+        for (int edge[] : edges) {
+            int U = edge[0]; // starting node of the edge
+            int V = edge[1]; // ending node of the edge
+            int W = edge[2]; // weight of the edge
             
-            if(isDirected){  //Directed
-                 Pair p = new Pair(V,W);
-                 adjListWeighted.get(V).add(p); 
-            }else{  //Undirected
-                 Pair p1 = new Pair(V,W);
-                 Pair p2 = new Pair(U,W);
-                 adjListWeighted.get(V).add(p1);
-                 adjListWeighted.get(U).add(p2);
+            if (isDirected) {  // Directed (U -> V)
+                 Pair p = new Pair(V, W);
+                 adjListWeighted.get(U).add(p); 
+            } else {  // Undirected (U <-> V)
+                 Pair p1 = new Pair(V, W);
+                 Pair p2 = new Pair(U, W);
+                 adjListWeighted.get(U).add(p1);
+                 adjListWeighted.get(V).add(p2);
             }
         }
         System.out.println();
     }
     
-    public void printWeightedList(){
-        for(int i = 0; i<adjListWeighted.size(); i++){
-            System.out.print(i + "->");
-            System.out.print("[");
-            for(int j = 0; j<adjListWeighted.get(i).size(); j++){
+    public void printWeightedList() {
+        for (int i = 0; i < adjListWeighted.size(); i++) {
+            System.out.print(i + "->[");
+            for (int j = 0; j < adjListWeighted.get(i).size(); j++) {
                 System.out.print(adjListWeighted.get(i).get(j));
-                if(j < adjListWeighted.get(i).size()-1){
-                    System.out.print(",");
+                if (j < adjListWeighted.get(i).size() - 1) {
+                    System.out.print(", ");
                 }
             }
             System.out.print("]");
@@ -55,19 +56,30 @@ public class Graph{
         }
     }
     
-    public static void main(String [] args){
-        
-        int edges[][]= {{0,1,10},{0,2,20},{1,3, 30}};
+    public static void main(String [] args) {
+        int edges[][] = {{0, 1, 10}, {0, 2, 20}, {1, 3, 30}};
         int nodes = 4;
         
-        //  Undirected Graph
+        // Undirected Graph
         Graph graph = new Graph(nodes);
-        graph.addEdgesWeightInList(edges,false);
+        graph.addEdgesWeightInList(edges, false);
         graph.printWeightedList();
         
-        //  Directed Graph
+        // Directed Graph
         Graph graph1 = new Graph(nodes);
-        graph1.addEdgesWeightInList(edges,true);
+        graph1.addEdgesWeightInList(edges, true);
         graph1.printWeightedList();
     }
 }
+
+/*
+0->[(1,10), (2,20)]
+1->[(0,10), (3,30)]
+2->[(0,20)]
+3->[(1,30)]
+
+0->[(1,10), (2,20)]
+1->[(3,30)]
+2->[]
+3->[]
+*/
