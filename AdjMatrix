@@ -23,7 +23,10 @@
         for(int i = 0; i<adjMatrix.length; i++){
             System.out.print("row " + i + "->");
             for(int j = 0; j<adjMatrix[i].length; j++){
-                System.out.print(adjMatrix[i][j] + ",");
+                System.out.print(" " + adjMatrix[i][j]);
+                if(j < adjMatrix.length-1){
+                    System.out.print(", ");
+                }
             }
             System.out.println();
         }
@@ -43,4 +46,15 @@
         graph1.addEdgesInMatrix(edges,true);
         graph1.printMatrix();
     }
-}
+}   
+
+/*row 0-> 0,  1,  1,  0
+row 1-> 1,  0,  0,  1
+row 2-> 1,  0,  0,  0
+row 3-> 0,  1,  0,  0
+
+row 0-> 0,  1,  1,  0
+row 1-> 0,  0,  0,  1
+row 2-> 0,  0,  0,  0
+row 3-> 0,  0,  0,  0
+*/
