@@ -1,0 +1,44 @@
+import java.util.List;
+import java.util.ArrayList;
+public class Graph{
+    List<List<Integer>>adjList; //Declare Graph
+    Graph(int nodes){
+        adjList = new ArrayList<>();
+        for(int i = 0; i<nodes; i++){
+            adjList.add(new ArrayList<>());
+        }//initialize graph List
+    }
+
+    
+    public void degreeInDirectedGraph(int edges[][], int nodes){
+        int inDegree[] = new int[nodes];
+        int outDegree[] = new int[nodes];
+        for(int edge[] : edges){
+            int from = edge[0];
+            int to = edge[1];
+            inDegree[to]++;
+            outDegree[from]++;
+        }
+        for(int i = 0; i<nodes; i++){
+            System.out.print("node -> " +i+ " in-degree -> "+ inDegree[i] + " -- ");
+            System.out.print("node -> " +i+ " out-degree -> "+ outDegree[i]);
+            System.out.println();
+        }
+    }
+    
+    public static void main(String [] args){
+        int edges[][]= {{0,1},{0,2},{1,3}};
+        int nodes = 4;
+        
+        Graph graph = new Graph(nodes);
+        graph.degreeInDirectedGraph(edges,nodes);
+        
+    }
+}
+
+/*
+node -> 0 in-degree -> 0 -- node -> 0 out-degree -> 2
+node -> 1 in-degree -> 1 -- node -> 1 out-degree -> 1
+node -> 2 in-degree -> 1 -- node -> 2 out-degree -> 0
+node -> 3 in-degree -> 1 -- node -> 3 out-degree -> 0
+*/
