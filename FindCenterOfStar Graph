@@ -1,0 +1,60 @@
+public int findCenter(int[][] edges) {
+    int pair1[] = edges[0]; // /v1, v2
+    int pair2[] = edges[1]; // /v1, v3 - v2, v3
+    
+    if(pair1[0] == pair2[0] || pair1[0] == pair2[1]){
+        return pair1[0];
+    }
+    
+    return pair1[1];
+}
+
+
+// ------------------------------
+
+class Solution {
+    public int findCenter(int[][] edges) {
+        if (edges[0][0] == edges[1][0] || edges[0][0] == edges[1][1]) {
+            return edges[0][0];
+        }
+        return edges[0][1];
+    }
+}
+
+// Is edges[0][0] (which is 1) equal to edges[1][0] (which is 2)? -> No.
+// Is edges[0][0] (which is 1) equal to edges[1][1] (which is 3)? -> No.
+
+// Since '1' did not repeat in the second edge, it cannot be the center.
+// Therefore, the program immediately hits the final statement:
+// return edges[0][1]; // returns 2
+
+// ---------------------------------------
+
+import java.util.HashMap;
+
+class Solution {
+    public int findCenter(int[][] edges) {
+        HashMap<Integer, Integer> freqMap = new HashMap<Integer, Integer>();
+        int totalEdges = edges.length; // 3 in your example
+
+        for (int i = 0; i < edges.length; i++) {
+            int v1 = edges[i][0];
+            int v2 = edges[i][1];
+            
+            // Fixed the typo "get0rDefault" to "getOrDefault" and removed the '@'
+            freqMap.put(v1, freqMap.getOrDefault(v1, 0) + 1);
+            freqMap.put(v2, freqMap.getOrDefault(v2, 0) + 1);
+            
+            // Added missing closing brackets for the if statements
+            if (freqMap.get(v1) == totalEdges) {
+                return v1;
+            }
+            
+            if (freqMap.get(v2) == totalEdges) {
+                return v2;
+            }
+        } // Added missing closing bracket for the for loop
+        
+        return -1;
+    }
+}
