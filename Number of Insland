@@ -1,0 +1,48 @@
+class Solution {
+    int rows;
+    int cols;
+
+    public int numIslands(char[][] grid) {
+        rows = grid.length;
+        cols = grid[0].length;
+        int islands = 0;
+        boolean[][] visited = new boolean[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                // If cell is land ('1') and not yet visited, initiate a DFS traversal
+                if (grid[i][j] == '1' && !visited[i][j]) {
+                    dfs(i, j, grid, visited);
+                    islands++;
+                }
+            }
+        }
+        return islands;
+    }
+
+    public void dfs(int row, int col, char[][] grid, boolean[][] visited) {
+        // Base Cases / Boundary & Validity Checks [00:14:37]
+        if (row < 0 || row >= rows || 
+            col < 0 || col >= cols || 
+            grid[row][col] == '0' || 
+            visited[row][col]) {
+            return;
+        }
+
+        // Mark current cell as visited
+        visited[row][col] = true;
+
+        // 4 Directions: Up, Right, Down, Left [00:15:38]
+        int[][] adjList = {
+            {row - 1, col},     // Up
+            {row, col + 1},     // Right
+            {row + 1, col},     // Down
+            {row, col - 1}      // Left
+        };
+
+        // Recursively traverse all neighboring cells
+        for (int[] neighbor : adjList) {
+            dfs(neighbor[0], neighbor[1], grid, visited);
+        }
+    }
+}
